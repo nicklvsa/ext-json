@@ -32,6 +32,7 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
 
     const flat = flatten(data);
     const possibleContainers = [];
+    const errors = [];
 
     for (let d in flat) {
         if (d.startsWith('//') || (d.split('.').length > 1 && d.split('.')[1].startsWith('//'))) delete flat[d];
@@ -45,11 +46,18 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
                     flat[d] = flat[d].replace(container, flat[possibleContainers.find((e) => e === container).replace('{{', '').replace('}}', '').trim()]);
                 }
             });
-        } catch (e) {}
+        } catch (e) {
+            errors.push(e);
+        }
     }
 
     if (debug === 'true') {
         console.log(flat);
+        if (errors && errors.length > 0) {
+            errors.forEach((err, i) => {
+                console.error(`\n\n#${i}: ${err}`);
+            });
+        }
     }
     
     const normal = JSON.stringify(unflatten(flat), null, '\t');

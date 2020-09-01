@@ -1,9 +1,10 @@
 {
 	"testing": "some value",
+	"something": "else",
 	"test": "yo",
 	"hello": {
 		"test": "some value",
-		"abc": "{{something}} is a test some value",
+		"abc": "else is a test some value",
 		"another": [
 			"0",
 			"1",
