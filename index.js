@@ -5,7 +5,7 @@ if (dotenv.error) {
     throw dotenv.error;
 }
 
-const inputFile = process.env.JSON_PATH;
+const inputFile = process.env.INPUT_PATH;
 if (!inputFile) {
     throw 'Input file not set!';
 }
