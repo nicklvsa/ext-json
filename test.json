@@ -4,8 +4,14 @@
     "test": "{{example}}",
     "hello": {
         "test": "{{testing}}",
-        "abc": "{{something}} is a test {{hello.test}}"
+        "abc": "{{something}} is a test {{hello.test}}",
+        "another": [
+            "0",
+            "1",
+            "2",
+            "{{testing}}"
+        ]
     },
     "example": "yo",
-    "pie": "is good"
+    "pie": "is good {{hello.another.3}}"
 }

@@ -15,6 +15,11 @@ if (!outputFile) {
     throw 'Output file not set!';
 }
 
+const debug = process.env.SHOULD_DEBUG;
+if (!debug) {
+    throw 'Debug not set!';
+}
+
 fs.readFile(inputFile, 'utf8', (err, raw) => {
     if (err) {
         throw err;
@@ -33,7 +38,7 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
         possibleContainers.push(`{{${d}}}`);
     }
 
-    for (let d in flat) {
+    for (const d in flat) {
         try {
             possibleContainers.forEach((container) => {
                 if (flat[d].includes(container)) {
@@ -43,6 +48,10 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
         } catch (e) {}
     }
 
+    if (debug === 'true') {
+        console.log(flat);
+    }
+    
     const normal = JSON.stringify(unflatten(flat), null, '\t');
 
     fs.writeFile(outputFile, normal, (err) => {
