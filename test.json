@@ -1,0 +1,11 @@
+{
+    "testing": "some value",
+    "something": "else",
+    "test": "{{example}}",
+    "hello": {
+        "test": "{{testing}}",
+        "abc": "{{something}} is a test {{hello.test}}"
+    },
+    "example": "yo",
+    "pie": "is good"
+}
