@@ -20,6 +20,10 @@ if (!debug) {
     throw 'Debug not set!';
 }
 
+const rules = {
+    'use-comments': false,
+};
+
 fs.readFile(inputFile, 'utf8', (err, raw) => {
     if (err) {
         throw err;
@@ -35,6 +39,16 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
     const errors = [];
 
     for (const d in flat) {
+        if (d.startsWith('__ext_json__')) {
+            switch (d) {
+                case '__ext_json__.use-comments':
+                    rules["use-comments"] = flat[d];
+                    break;
+                default:
+                    break;
+            }
+            delete flat[d];
+        }
         if (d.startsWith('//') || (d.split('.').length > 1 && d.split('.')[1].startsWith('//'))) delete flat[d];
         possibleContainers.push(`{{${d}}}`);
     }
@@ -52,6 +66,7 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
     }
 
     if (debug === 'true') {
+        console.log(`Rules: ${JSON.stringify(rules)}\n\n`);
         console.log(flat);
         if (errors && errors.length > 0) {
             errors.forEach((err, i) => {
