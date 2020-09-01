@@ -34,7 +34,7 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
     const possibleContainers = [];
 
     for (let d in flat) {
-        if (d.startsWith('//')) delete flat[d];
+        if (d.startsWith('//') || (d.split('.').length > 1 && d.split('.')[1].startsWith('//'))) delete flat[d];
         possibleContainers.push(`{{${d}}}`);
     }
 

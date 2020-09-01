@@ -13,5 +13,5 @@
         ]
     },
     "example": "yo",
-    "pie": "is good {{hello.another.3}}"
+    "pie": "is good"
 }
