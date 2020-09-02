@@ -38,22 +38,16 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
     const possibleContainers = [];
     const errors = [];
 
-    for (const d in flat) {
+    for (let d in flat) {
         if (d.startsWith('__ext_json__')) {
-            switch (d) {
-                case '__ext_json__.use-comments':
-                    rules["use-comments"] = flat[d];
-                    break;
-                default:
-                    break;
-            }
+            // TODO: possibly add configurable options
             delete flat[d];
         }
         if (d.startsWith('//') || (d.split('.').length > 1 && d.split('.')[1].startsWith('//'))) delete flat[d];
         possibleContainers.push(`{{${d}}}`);
     }
 
-    for (const d in flat) {
+    for (let d in flat) {
         try {
             possibleContainers.forEach((container) => {
                 if (flat[d].includes(container)) {

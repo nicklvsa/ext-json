@@ -1,7 +1,4 @@
 {
-    "__ext_json__": {
-        "use-comments": true
-    },
     "testing": "some value",
     "something": "else",
     "test": "{{example}}",
