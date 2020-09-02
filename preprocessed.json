@@ -1,10 +1,10 @@
 {
 	"testing": "some value",
-	"something": "else",
+	"something": "world",
 	"test": "yo",
 	"hello": {
 		"test": "some value",
-		"abc": "else is a test some value",
+		"abc": "world is a test some value",
 		"another": [
 			"0",
 			"1",
@@ -12,6 +12,14 @@
 			"some value"
 		]
 	},
+	"things": {
+		"stuff": {
+			"yes": {
+				"hi": "hello world"
+			}
+		}
+	},
 	"example": "yo",
-	"pie": "is good"
+	"pie": "is good",
+	"cool": "this is an example: hello world"
 }

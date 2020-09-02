@@ -1,6 +1,6 @@
 {
     "testing": "some value",
-    "something": "else",
+    "something": "world",
     "test": "{{example}}",
     "hello": {
         "test": "{{testing}}",
@@ -12,6 +12,14 @@
             "{{testing}}"
         ]
     },
+    "things": {
+        "stuff": {
+            "yes": {
+                "hi": "hello {{something}}"
+            }
+        }
+    },
     "example": "yo",
-    "pie": "is good"
+    "pie": "is good",
+    "cool": "this is an example: {{things.stuff.yes.hi}}"
 }
