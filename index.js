@@ -89,6 +89,7 @@ const run = (inputData) => {
     for (let s of specialToDelete) {
         if (flat[s]) delete flat[s];
     }
+    
     const normal = JSON.stringify(unflatten(flat), null, '\t');
 
     fs.writeFile(outputFile, normal, (err) => {
