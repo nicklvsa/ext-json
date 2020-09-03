@@ -1,6 +1,8 @@
 {
+	"str": "Nick, 18, 5-10",
 	"some_terms": {
 		"hello_world": "Hi Nick",
 		"foo_bar": "Nick is 18 years old"
-	}
+	},
+	"full_string": "Nick, 18, 5-10"
 }

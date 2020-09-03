@@ -1,5 +1,6 @@
 {
     ">>name": "Nick",
     ">>age": "18",
-    ">>height": "5-10"
+    ">>height": "5-10",
+    "str": "{{name}}, {{age}}, {{height}}"
 }
