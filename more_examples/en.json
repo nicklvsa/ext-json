@@ -1,0 +1,6 @@
+{
+    "some_terms": {
+        "hello_world": "Hi {{name}}",
+        "foo_bar": "{{name}} is {{age}} years old"
+    }
+}
