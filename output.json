@@ -8,6 +8,7 @@
 		"another": [
 			"0",
 			"1",
+			"cool new static value ",
 			"2",
 			"some value"
 		]
@@ -22,7 +23,6 @@
 	"example": "yo",
 	"pie": "is good",
 	"cool": "this is an example: hello world",
-	"testing2files": "hello: i am kewl",
-	"pieisgood": "world",
-	"coolness": "i am kewl"
+	"testing2files": "hello: cool new static value ",
+	"pieisgood": "world"
 }

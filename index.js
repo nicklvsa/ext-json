@@ -55,6 +55,7 @@ const readFiles = async (files) => {
 
 const run = (inputData) => {
     const flat = flatten(inputData);
+    const specialToDelete = [];
     const possibleContainers = [];
     const errors = [];
 
@@ -64,6 +65,12 @@ const run = (inputData) => {
             delete flat[d];
         }
         if (d.startsWith('//') || (d.split('.').length > 1 && d.split('.')[1].startsWith('//'))) delete flat[d];
+        if (d.startsWith('>>')) {
+            flat[d.substring(2)] = flat[d];
+            specialToDelete.push(d.substring(2));
+            possibleContainers.push(`{{${d.substring(2)}}}`);
+            delete flat[d];
+        } 
         possibleContainers.push(`{{${d}}}`);
     }
 
@@ -78,7 +85,10 @@ const run = (inputData) => {
             errors.push(e);
         }
     }
-        
+    
+    for (let s of specialToDelete) {
+        if (flat[s]) delete flat[s];
+    }
     const normal = JSON.stringify(unflatten(flat), null, '\t');
 
     fs.writeFile(outputFile, normal, (err) => {
