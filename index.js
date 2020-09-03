@@ -1,40 +1,60 @@
 const fs = require('fs');
-const dotenv = require('dotenv').config();
+const cmdArgs = require('command-line-args');
+const { resolve } = require('path');
 
-if (dotenv.error) {
-    throw dotenv.error;
-}
+const defOpts = [
+    {
+        name: 'input', 
+        alias: 'i', 
+        multiple: true,
+        type: String,
+    },
+    {
+        name: 'output',
+        alias: 'o',
+        type: String,
+    },
+];
 
-const inputFile = process.env.INPUT_PATH;
+const options = cmdArgs(defOpts);
+
+let inputFile = options.input;
 if (!inputFile) {
     throw 'Input file not set!';
 }
 
-const outputFile = process.env.OUTPUT_PATH;
+const outputFile = options.output;
 if (!outputFile) {
     throw 'Output file not set!';
 }
 
-const debug = process.env.SHOULD_DEBUG;
-if (!debug) {
-    throw 'Debug not set!';
-}
+const readFiles = async (files) => {
+    const result = [];
 
-const rules = {
-    'use-comments': false,
+    const proms = files.map((_path) => {
+        return new Promise(function (_path, resolve, reject) {
+            fs.readFile(_path, 'utf8', (err, raw) => {
+                if (err) {
+                    resolve(err);
+                } else {
+                    resolve(raw);
+                }
+            });
+        }.bind(this, _path));
+    });
+
+    await Promise.all(proms).then((values) => {
+        values.forEach((val) => {
+            const content = JSON.parse(val);
+            result.push(content);
+        });
+    });
+
+    return result;
 };
 
-fs.readFile(inputFile, 'utf8', (err, raw) => {
-    if (err) {
-        throw err;
-    }
-
-    const data = JSON.parse(raw);
-    if (!data) {
-        throw 'Could not parse data from the input file!';
-    }
-
-    const flat = flatten(data);
+const run = (inputData) => {
+    const flat = flatten(inputData);
     const possibleContainers = [];
     const errors = [];
 
@@ -58,17 +78,7 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
             errors.push(e);
         }
     }
-
-    if (debug === 'true') {
-        console.log(`Rules: ${JSON.stringify(rules)}\n\n`);
-        console.log(flat);
-        if (errors && errors.length > 0) {
-            errors.forEach((err, i) => {
-                console.error(`\n\n#${i}: ${err}`);
-            });
-        }
-    }
-    
+        
     const normal = JSON.stringify(unflatten(flat), null, '\t');
 
     fs.writeFile(outputFile, normal, (err) => {
@@ -76,7 +86,13 @@ fs.readFile(inputFile, 'utf8', (err, raw) => {
             throw err;
         }
     });
-});
+
+    if (errors && errors.length > 0) {
+        errors.forEach((err, i) => {
+            console.error(`\n\n#${i}: ${err}`);
+        });
+    }
+};
 
 const unflatten = (data) => {
     if (Object(data) !== data || Array.isArray(data))
@@ -119,3 +135,11 @@ const flatten = (data) => {
     recurse(data, "");
     return result;
 };
+
+// run the preprocessor
+(async () => {
+    const res = await readFiles(inputFile);
+    run(res.reduce((result, current) => {
+        return Object.assign(result, current);
+    }, {}));
+})();

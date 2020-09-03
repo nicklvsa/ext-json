@@ -21,5 +21,6 @@
     },
     "example": "yo",
     "pie": "is good",
-    "cool": "this is an example: {{things.stuff.yes.hi}}"
+    "cool": "this is an example: {{things.stuff.yes.hi}}",
+    "testing2files": "hello: {{coolness}}"
 }
