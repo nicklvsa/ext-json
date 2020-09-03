@@ -55,6 +55,7 @@ const readFiles = async (files) => {
 
 const run = (inputData) => {
     const flat = flatten(inputData);
+    const refs = [];
     const specialToDelete = [];
     const possibleContainers = [];
     const errors = [];
@@ -70,7 +71,7 @@ const run = (inputData) => {
             specialToDelete.push(d.substring(2));
             possibleContainers.push(`{{${d.substring(2)}}}`);
             delete flat[d];
-        } 
+        }
         possibleContainers.push(`{{${d}}}`);
     }
 
@@ -100,7 +101,7 @@ const run = (inputData) => {
 
     if (errors && errors.length > 0) {
         errors.forEach((err, i) => {
-            console.error(`\n\n#${i}: ${err}`);
+            console.error(`#${i}: ${err}`);
         });
     }
 };
