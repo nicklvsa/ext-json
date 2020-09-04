@@ -55,7 +55,6 @@ const readFiles = async (files) => {
 
 const run = (inputData) => {
     const flat = flatten(inputData);
-    const refs = [];
     const specialToDelete = [];
     const possibleContainers = [];
     const errors = [];

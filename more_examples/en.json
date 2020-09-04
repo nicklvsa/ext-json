@@ -3,5 +3,5 @@
         "hello_world": "Hi {{name}}",
         "foo_bar": "{{name}} is {{age}} years old"
     },
-    "full_string": "{{str}}",
+    "full_string": "{{str}}"
 }
